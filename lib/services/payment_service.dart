@@ -30,7 +30,7 @@ class PaymentService {
   }) {
     try {
       var options = {
-        'key': 'rzp_test_YOUR_KEY_HERE', // Replace with your test key
+        'key': 'rzp_live_3XlZxl6S2KSrdr',
         'amount': (amount * 100).toInt(),
         'name': orderName,
         'description': 'Payment for food order',
