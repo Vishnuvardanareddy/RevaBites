@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:reva_bites/screens/home_screen.dart';
-import 'package:reva_bites/screens/cart_screen.dart';
-import 'package:reva_bites/screens/orders_screen.dart';
 import 'package:reva_bites/screens/account_screen.dart';
+import 'package:reva_bites/screens/cart_screen.dart';
+import 'package:reva_bites/screens/home_screen.dart';
+import 'package:reva_bites/screens/orders_screen.dart';
 import 'package:reva_bites/widgets/animated_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {

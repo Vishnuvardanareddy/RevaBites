@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:reva_bites/utils/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:reva_bites/providers/cart_provider.dart';
 import 'package:reva_bites/services/payment_service.dart';
+import 'package:reva_bites/utils/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartSummary extends StatefulWidget {
@@ -34,12 +36,32 @@ class _CartSummaryState extends State<CartSummary> {
         return;
       }
 
+      // Get cart items from provider
+      final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
       _paymentService.startPayment(
         amount: widget.total,
         orderName: 'Food Order #${DateTime.now().millisecondsSinceEpoch}',
         customerName: user.email?.split('@').first ?? 'Customer',
         customerEmail: user.email ?? '',
         customerPhone: '1234567890', // You should get this from user profile
+        restaurantId: context.read<CartProvider>().restaurantId!,
+        cartItems: cartProvider.items,
+        onOrderSuccess: () {
+          // Clear the cart after successful order
+          cartProvider.clear();
+
+          // Navigate back or to order confirmation screen
+          if (mounted) {
+            // Show success message
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Order placed successfully!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        },
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -80,7 +102,7 @@ class _CartSummaryState extends State<CartSummary> {
                 ),
               ),
               Text(
-                '\$${widget.total.toStringAsFixed(2)}',
+                '₹${widget.total.toStringAsFixed(2)}',
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

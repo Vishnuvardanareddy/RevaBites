@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:reva_bites/models/cart_item.dart';
 
 class CartProvider with ChangeNotifier {
+  String? restaurantId;
+
   final Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items => Map.unmodifiable(_items);
@@ -72,6 +74,7 @@ class CartProvider with ChangeNotifier {
 
   void clear() {
     _items.clear();
+    restaurantId = null;
     notifyListeners();
   }
 }

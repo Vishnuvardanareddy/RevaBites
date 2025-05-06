@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:reva_bites/models/restaurant.dart';
 import 'package:reva_bites/services/restaurant_service.dart';
 import 'package:reva_bites/utils/constants.dart';
 import 'package:reva_bites/widgets/menu_item_card.dart';
+
+import '../providers/cart_provider.dart';
 
 class RestaurantDetailsScreen extends StatefulWidget {
   final Restaurant restaurant;
@@ -26,6 +29,7 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<CartProvider>().restaurantId = widget.restaurant.id;
     _loadMenuItems();
   }
 

@@ -1,6 +1,6 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:reva_bites/models/restaurant.dart';
 import 'package:reva_bites/models/food_item.dart';
+import 'package:reva_bites/models/restaurant.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Rest of the file remains the same;
 
