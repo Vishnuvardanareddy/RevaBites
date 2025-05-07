@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:reva_bites/screens/vendor_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:reva_bites/screens/auth_screen.dart';
 import 'package:reva_bites/screens/main_screen.dart';
@@ -46,8 +47,15 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            session != null ? const MainScreen() : const AuthScreen(),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          if (session == null) {
+            return const AuthScreen();
+          }
+          final screen = session.user.email == 'vendor@gmail.com'
+              ? const VendorScreen()
+              : const MainScreen();
+          return screen;
+        },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -84,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
                       padding: const EdgeInsets.all(AppDimensions.paddingLarge),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withValues(alpha: 0.1),
                       ),
                       child: Image.asset(
                         'assets/logo.png',
@@ -105,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
                       'Order,Eat,Repeat.',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                       ),
                     ),
                   ],

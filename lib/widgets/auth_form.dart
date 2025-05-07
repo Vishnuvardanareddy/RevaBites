@@ -7,6 +7,8 @@ import 'package:reva_bites/utils/validators.dart';
 import 'package:reva_bites/widgets/custom_button.dart';
 import 'package:reva_bites/widgets/custom_text_field.dart';
 
+import '../screens/vendor_screen.dart';
+
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
 
@@ -36,9 +38,12 @@ class _AuthFormState extends State<AuthForm> {
         );
 
         if (response.user != null && mounted) {
+          final screen = response.user?.email == 'vendor@gmail.com'
+              ? const VendorScreen()
+              : const MainScreen();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
+            MaterialPageRoute(builder: (context) => screen),
           );
         }
       } else {
